@@ -9,6 +9,7 @@
     "build-prod": "parcel build src/index.html"
   },
   "dependencies": {
+    "antd": "^4.16.13",
     "deck.gl": "^8.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
