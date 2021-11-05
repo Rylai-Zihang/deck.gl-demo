@@ -5,15 +5,18 @@ import DeckGL from '@deck.gl/react';
 import { StaticMap } from 'react-map-gl';
 import { MapboxLayer } from '@deck.gl/mapbox';
 
-import Uploader from './Upload'
+import ControlPanel from './components/ControlPanel'
+import Uploader from './components/Upload'
 import { getInitialView } from './utils';
 import { FileContent, InitialView } from './utils/types';
+import { MAPBOX_TOKEN, POINT_COLORS } from './utils/constants';
 
-const MAPBOX_TOKEN = "pk.eyJ1IjoicnlsYWkiLCJhIjoiY2t2bHN0bXViZGhqdjJwbWFibXY2NGVndyJ9.kWVDaEW-3MW_Ny3KOq4ACw";
 
 export default function App() {
     const [glContext, setGLContext] = useState<any>();
     const [fileContent, setFileContent] = useState<FileContent>(null);
+    const [layerArray, setLayerArray] = useState<string[]>([]);
+    const [visibilityArray, setVisibilityArray] = useState<boolean[]>([]);
     const deckRef = useRef<any>(null);
     const mapRef = useRef<any>(null);
     const map = mapRef?.current?.getMap();
@@ -22,36 +25,34 @@ export default function App() {
     const initialView: InitialView = getInitialView(fileContent);
     const onMapLoad = useCallback(() => {
         // prevent flashing
-        map.addLayer(
+        map && map.addLayer(
             new MapboxLayer({ 'id': "empty-layer", deck })
         )
-    }, []);
+    }, [map]);
 
     useEffect(() => {
-        const map = mapRef?.current?.getMap();
-        fileContent &&
-            map.addSource('layer1', {
+        const length = layerArray.length
+        // 最后一个加入的为新的图层
+        const layerName = layerArray[length - 1]
+        if (fileContent) {
+            map.addSource(layerName, {
                 'type': 'geojson',
                 'data': fileContent
             });
-
-        fileContent &&
             map.addLayer({
-                'id': 'layer1-point',
+                'id': `${layerName}-point`,
                 'type': 'circle',
-                'source': 'layer1',
+                'source': layerName,
                 'paint': {
                     'circle-radius': 3,
-                    'circle-color': '#B42222'
+                    'circle-color': POINT_COLORS[length - 1]
                 },
                 'filter': ['==', '$type', 'Point']
             });
-
-        fileContent &&
             map.addLayer({
-                'id': 'layer1-label',
+                'id': `${layerName}-label`,
                 'type': 'symbol',
-                'source': 'layer1',
+                'source': layerName,
                 'layout': {
                     'text-field': ['get', 'name'],
                     'text-size': 12,
@@ -60,6 +61,7 @@ export default function App() {
                     'text-justify': 'auto'
                 }
             });
+        }
     }, [fileContent])
 
 
@@ -83,7 +85,16 @@ export default function App() {
                     onLoad={onMapLoad}
                 />
             )}
-            <Uploader setFileContent={setFileContent}></Uploader>
+            <ControlPanel
+                layerArray={layerArray}
+                visibilityArray={visibilityArray}
+                setVisibilityArray={setVisibilityArray}></ControlPanel>
+            <Uploader
+                layerArray={layerArray}
+                setFileContent={setFileContent}
+                setLayerArray={setLayerArray}
+                visibilityArray={visibilityArray}
+                setVisibilityArray={setVisibilityArray}></Uploader>
         </DeckGL>
     );
 }
