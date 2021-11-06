@@ -1,15 +1,19 @@
-.control-panel {
-  position: fixed;
-  top: 40px;
-  width: 250px;
-  background-color: #fff;
-  border-radius: 0.5em;
-  border: 1px solid #ddd;
-  padding: 1em;
-  z-index: 999;
-  min-height: 300px;
-  transition: border 0.2s ease 0s, color 0.2s ease 0s;
-  span {
-    margin-right: 15px;
+.layer {
+  &-control-panel {
+    position: fixed;
+    top: 40px;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 0.5em;
+    border: 1px solid #ddd;
+    padding: 1em;
+    z-index: 999;
+    min-height: 200px;
+  }
+  &-container {
+    padding: 0.3em 0;
+    span {
+      margin-right: 15px;
+    }
   }
 }

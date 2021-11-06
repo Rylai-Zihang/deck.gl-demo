@@ -1,4 +1,4 @@
-interface GeoData {
+export interface GeoData {
     type: string,
     features: Array<Feature>
 }
@@ -24,7 +24,6 @@ interface GeoLayer {
 }
 
 export type ClickedLayer = GeoLayer | null
-
 
 export type Store = {
     fileContent: FileContent,

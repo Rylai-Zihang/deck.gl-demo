@@ -18,19 +18,23 @@ export default function Map() {
     const map = mapRef?.current?.getMap()
     const deck = deckRef?.current?.deck
 
-    const initialView: InitialView = getInitialView(fileContent)
+    const initialView: InitialView =
+        fileContent ?
+            getInitialView(fileContent) :
+            { zoom: 12, longitude: 114.05, latitude: 22.55 }
+
 
     const onMapLoad = useCallback(() => {
         // prevent flashing
         map?.addLayer(
             new MapboxLayer({ 'id': "empty-layer", deck })
         )
-    }, [map])
+    }, [])
 
     useEffect(() => {
-        const length = layerArray.length
-        // the newest layer
-        const layerName = layerArray[length - 1]
+        // get the newest layer
+        const newIndex = layerArray.length - 1
+        const layerName = layerArray[newIndex]
         if(fileContent) {
             map.addSource(layerName, {
                 'type': 'geojson',
@@ -42,7 +46,7 @@ export default function Map() {
                 'source': layerName,
                 'paint': {
                     'circle-radius': 3,
-                    'circle-color': POINT_COLORS[length - 1]
+                    'circle-color': POINT_COLORS[newIndex]
                 },
                 'filter': ['==', '$type', 'Point']
             })

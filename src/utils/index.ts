@@ -1,7 +1,7 @@
-import { FileContent, InitialView } from "../types"
+import { GeoData, InitialView } from "../types"
 
-export const getInitialView = (data: FileContent): InitialView => {
-    const [longitude, latitude] = data ? data['features'][0]['geometry']['coordinates'] : [114.05, 22.55]
+export const getInitialView = (data: GeoData): InitialView => {
+    const [longitude, latitude] = data['features'][0]['geometry']['coordinates']
     return {
         zoom: 12,
         longitude,
