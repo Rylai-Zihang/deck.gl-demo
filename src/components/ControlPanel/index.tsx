@@ -1,20 +1,15 @@
 
 import * as React from 'react';
+import { useContext } from 'react';
 import { Switch } from 'antd';
 import "./style.scss";
-import { ClickedLayer } from '../../utils/types';
+import store from '../../store';
 
-
-interface Props {
-    layerArray: string[],
-    visibilityArray: boolean[],
-    setClickedLayer: (clickedLayer: ClickedLayer) => void
-}
-
-const ControlPanel = (props: Props) => {
-    const { layerArray, visibilityArray, setClickedLayer } = props
+const ControlPanel = () => {
+    const { state, dispatch } = useContext(store.Context);
+    const { layerArray, visibilityArray } = state
     const onChange = (checked: boolean, index: number) => {
-        setClickedLayer({ index, checked })
+        dispatch({ type: "setClickedLayer", clickedLayer: { index, checked } })
     }
     return (
         <div className="control-panel">

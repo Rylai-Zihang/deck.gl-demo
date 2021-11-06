@@ -24,3 +24,13 @@ interface GeoLayer {
 }
 
 export type ClickedLayer = GeoLayer | null
+
+
+export type Store = {
+    fileContent: FileContent,
+    layerArray: string[],
+    visibilityArray: boolean[],
+    clickedLayer: ClickedLayer,
+}
+
+export type Action = { type: string, [key: string]: any }
