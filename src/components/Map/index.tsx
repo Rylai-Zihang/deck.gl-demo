@@ -1,13 +1,11 @@
-
-import * as React from 'react'
-import { useState, useRef, useCallback, useEffect, useContext } from "react"
-import DeckGL from '@deck.gl/react'
-import { StaticMap } from 'react-map-gl'
-import { MapboxLayer } from '@deck.gl/mapbox'
+import React, { useState, useRef, useCallback, useEffect, useContext } from "react"
+import DeckGL from "@deck.gl/react"
+import { StaticMap } from "react-map-gl"
+import { MapboxLayer } from "@deck.gl/mapbox"
 
 import store from "../../store"
-import { getInitialView } from '../../utils'
-import { InitialView } from '../../types'
+import { getInitialView } from "../../utils"
+import { InitialView } from "../../types"
 import { MAPBOX_TOKEN, POINT_COLORS } from '../../utils/constants'
 
 export default function Map() {

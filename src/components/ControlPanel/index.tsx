@@ -1,7 +1,6 @@
 
-import * as React from 'react'
-import { useContext } from 'react'
-import { Switch } from 'antd'
+import React, { useContext } from "react"
+import { Switch } from "antd"
 import "./style.scss"
 import store from '../../store'
 

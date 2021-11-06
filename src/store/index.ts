@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Dispatch } from "react"
+import React, { Dispatch } from "react"
 import { Action, Store } from "../types"
 
 const store: Store = {

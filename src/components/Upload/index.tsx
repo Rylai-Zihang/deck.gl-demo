@@ -1,8 +1,7 @@
 // @ts-nocheck
-import * as React from 'react'
-import { useContext } from 'react'
-import { Upload, Button } from 'antd'
-import 'antd/dist/antd.css'
+import React, { useContext } from "react"
+import { Upload, Button } from "antd"
+import "antd/dist/antd.css"
 import { UploadOutlined } from '@ant-design/icons'
 import store from '../../store'
 
