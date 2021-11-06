@@ -1,9 +1,9 @@
-export type FileContent = GeoData | null
-
 interface GeoData {
     type: string,
     features: Array<Feature>
 }
+
+export type FileContent = GeoData | null
 
 interface Feature {
     properties: { "name": string },
@@ -17,3 +17,10 @@ export type InitialView = {
     longitude:number,
     latitude:number
 }
+
+interface GeoLayer {
+    index: number,
+    checked: boolean
+}
+
+export type ClickedLayer = GeoLayer | null

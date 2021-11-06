@@ -8,7 +8,7 @@ import { MapboxLayer } from '@deck.gl/mapbox';
 import ControlPanel from './components/ControlPanel'
 import Uploader from './components/Upload'
 import { getInitialView } from './utils';
-import { FileContent, InitialView } from './utils/types';
+import { ClickedLayer, FileContent, InitialView } from './utils/types';
 import { MAPBOX_TOKEN, POINT_COLORS } from './utils/constants';
 
 
@@ -17,22 +17,25 @@ export default function App() {
     const [fileContent, setFileContent] = useState<FileContent>(null);
     const [layerArray, setLayerArray] = useState<string[]>([]);
     const [visibilityArray, setVisibilityArray] = useState<boolean[]>([]);
+    const [clickedLayer, setClickedLayer] = useState<ClickedLayer>(null);
+
     const deckRef = useRef<any>(null);
     const mapRef = useRef<any>(null);
     const map = mapRef?.current?.getMap();
     const deck = deckRef?.current?.deck;
 
     const initialView: InitialView = getInitialView(fileContent);
+
     const onMapLoad = useCallback(() => {
         // prevent flashing
-        map && map.addLayer(
+        map?.addLayer(
             new MapboxLayer({ 'id': "empty-layer", deck })
         )
     }, [map]);
 
     useEffect(() => {
         const length = layerArray.length
-        // 最后一个加入的为新的图层
+        // the newest layer
         const layerName = layerArray[length - 1]
         if (fileContent) {
             map.addSource(layerName, {
@@ -64,6 +67,25 @@ export default function App() {
         }
     }, [fileContent])
 
+    useEffect(() => {
+        if (!clickedLayer) return
+        const { index, checked } = clickedLayer
+        const visibilityState = checked ? 'visible' : 'none'
+        const layerName = layerArray[index]
+        map?.setLayoutProperty(
+            `${layerName}-point`,
+            'visibility',
+            visibilityState
+        );
+        map?.setLayoutProperty(
+            `${layerName}-label`,
+            'visibility',
+            visibilityState
+        );
+        const newArray = [...visibilityArray]
+        newArray.splice(index, 1, checked)
+        setVisibilityArray(newArray)
+    }, [clickedLayer])
 
     return (
         <DeckGL
@@ -88,7 +110,7 @@ export default function App() {
             <ControlPanel
                 layerArray={layerArray}
                 visibilityArray={visibilityArray}
-                setVisibilityArray={setVisibilityArray}></ControlPanel>
+                setClickedLayer={setClickedLayer}></ControlPanel>
             <Uploader
                 layerArray={layerArray}
                 setFileContent={setFileContent}
