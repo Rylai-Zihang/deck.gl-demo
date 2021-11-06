@@ -1,12 +1,12 @@
 
-import * as React from 'react';
-import { useContext } from 'react';
-import { Switch } from 'antd';
-import "./style.scss";
-import store from '../../store';
+import * as React from 'react'
+import { useContext } from 'react'
+import { Switch } from 'antd'
+import "./style.scss"
+import store from '../../store'
 
 const ControlPanel = () => {
-    const { state, dispatch } = useContext(store.Context);
+    const { state, dispatch } = useContext(store.Context)
     const { layerArray, visibilityArray } = state
     const onChange = (checked: boolean, index: number) => {
         dispatch({ type: "setClickedLayer", clickedLayer: { index, checked } })

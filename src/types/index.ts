@@ -14,8 +14,8 @@ type PositionArray = [number, number]
 
 export type InitialView = {
     zoom: number,
-    longitude:number,
-    latitude:number
+    longitude: number,
+    latitude: number
 }
 
 interface GeoLayer {
@@ -30,7 +30,7 @@ export type Store = {
     fileContent: FileContent,
     layerArray: string[],
     visibilityArray: boolean[],
-    clickedLayer: ClickedLayer,
+    clickedLayer: ClickedLayer
 }
 
 export type Action = { type: string, [key: string]: any }
