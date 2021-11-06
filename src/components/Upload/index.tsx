@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { Upload, Button, UploadProps } from "antd"
+import { Upload, Button, message, UploadProps } from "antd"
 import "antd/dist/antd.css"
 import { UploadOutlined } from '@ant-design/icons'
 import store from '../../store'
@@ -12,7 +12,10 @@ export default function Uploader() {
         accept: ".geojson",
         showUploadList: false,
         beforeUpload(file) {
-            if(layerArray.indexOf(file.name) > -1) return
+            if(layerArray.indexOf(file.name) > -1) {
+                message.warning('该图层已存在哦')
+                return
+            }
             return new Promise(resolve => {
                 const reader = new FileReader()
                 reader.onload = (e) => {
