@@ -3,8 +3,6 @@ export interface GeoData {
     features: Array<Feature>
 }
 
-export type FileContent = GeoData | null
-
 interface Feature {
     properties: { "name": string },
     geometry: { "type": string, "coordinates": PositionArray }
@@ -13,9 +11,11 @@ interface Feature {
 type PositionArray = [number, number]
 
 export type InitialView = {
-    zoom: number,
     longitude: number,
-    latitude: number
+    latitude: number,
+    zoom: number,
+    pitch: number,
+    bearing: number
 }
 
 interface GeoLayer {
@@ -23,13 +23,11 @@ interface GeoLayer {
     checked: boolean
 }
 
-export type ClickedLayer = GeoLayer | null
-
 export type Store = {
-    fileContent: FileContent,
+    fileContent: GeoData | null,
     layerArray: string[],
     visibilityArray: boolean[],
-    clickedLayer: ClickedLayer
+    clickedLayer: GeoLayer | null
 }
 
 export type Action = { type: string, [key: string]: any }
