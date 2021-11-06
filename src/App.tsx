@@ -5,10 +5,10 @@ import Map from './components/Map'
 import ControlPanel from './components/ControlPanel'
 import Upload from './components/Upload'
 
-import myStore from "./store"
+import dataStore from "./store"
 
 export default function App() {
-    const { reducer, store, Context } = myStore
+    const { reducer, store, Context } = dataStore
     const [state, dispatch] = useReducer(reducer, store)
     const api = { state, dispatch }
 
