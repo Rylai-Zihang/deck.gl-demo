@@ -6,8 +6,8 @@ module.exports = {
     tabWidth: 4,
     // use spaces instead of indentations
     useTabs: false,
-    // semicolon at the end of the line
-    semi: true,
+    // no semicolon at the end of the line
+    semi: false,
     // use single quotes
     singleQuote: true,
     // object's key is quoted only when necessary
@@ -15,7 +15,7 @@ module.exports = {
     // use double quotes instead of single quotes in jsx
     jsxSingleQuote: false,
     // no comma at the end
-    trailingComma: 'all',
+    trailingComma: 'none',
     // spaces are required at the beginning and end of the braces
     bracketSpacing: true,
     // end tag of jsx need to wrap
@@ -38,5 +38,5 @@ module.exports = {
     // lf for newline
     endOfLine: 'lf',
     // formats quoted code embedded
-    embeddedLanguageFormatting: 'auto',
-};
+    embeddedLanguageFormatting: 'auto'
+}
