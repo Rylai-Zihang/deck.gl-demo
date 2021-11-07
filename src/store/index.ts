@@ -1,5 +1,5 @@
-import React, { Dispatch } from "react"
-import { Action, Store } from "../types"
+import React, { Dispatch } from 'react'
+import { Action, Store } from '../types'
 
 const store: Store = {
     fileContent: null,
@@ -9,14 +9,14 @@ const store: Store = {
 }
 
 function reducer(state: Store, action: Action) {
-    switch(action.type) {
-        case "setFileContent":
+    switch (action.type) {
+        case 'setFileContent':
             return { ...state, fileContent: action.fileContent }
-        case "setLayerArray":
+        case 'setLayerArray':
             return { ...state, layerArray: action.layerArray }
-        case "setVisibilityArray":
+        case 'setVisibilityArray':
             return { ...state, visibilityArray: action.visibilityArray }
-        case "setClickedLayer":
+        case 'setClickedLayer':
             return { ...state, clickedLayer: action.clickedLayer }
         default:
             throw new Error(`Wrong action type: ${action.type}!`)
@@ -24,8 +24,8 @@ function reducer(state: Store, action: Action) {
 }
 
 const Context = React.createContext<{
-    state: Store,
-    dispatch: Dispatch<{ type: string;[key: string]: any }>
+    state: Store
+    dispatch: Dispatch<{ type: string; [key: string]: any }>
 }>({} as any)
 
 export default { store, reducer, Context }
