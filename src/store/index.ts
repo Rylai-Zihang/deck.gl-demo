@@ -19,13 +19,13 @@ function reducer(state: Store, action: Action) {
         case 'setClickedLayer':
             return { ...state, clickedLayer: action.clickedLayer };
         default:
-            throw new Error(`Wrong action type: ${action.type}!`);
+            return state;
     }
 }
 
 const Context = React.createContext<{
     state: Store;
-    dispatch: Dispatch<{ type: string; [key: string]: any }>;
-}>({} as any);
+    dispatch: Dispatch<Action>;
+}>({ state: store, dispatch: () => {} });
 
 export default { store, reducer, Context };

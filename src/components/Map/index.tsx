@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback, useEffect, useContext } from 'react';
 import DeckGL from '@deck.gl/react';
-import { StaticMap } from 'react-map-gl';
+import { MapRef, StaticMap } from 'react-map-gl';
 import { MapboxLayer } from '@deck.gl/mapbox';
 
 import store from '../../store';
@@ -11,10 +11,10 @@ import { MAPBOX_TOKEN, POINT_COLORS, DEFAULT_INITIAL_VIEW } from '../../utils/co
 export default function Map() {
     const { state, dispatch } = useContext(store.Context);
     const { fileContent, layerArray, clickedLayer, visibilityArray } = state;
-    const [glContext, setGLContext] = useState<any>();
+    const [glContext, setGLContext] = useState<WebGLRenderingContext>();
 
-    const deckRef = useRef<any>(null);
-    const mapRef = useRef<any>(null);
+    const deckRef = useRef<DeckGL>(null);
+    const mapRef = useRef<MapRef>(null);
     const mapInstanceRef = useRef<{ map: any }>({
         map: null
     });
@@ -22,8 +22,8 @@ export default function Map() {
     const initialView: InitialView = fileContent ? getInitialView(fileContent) : DEFAULT_INITIAL_VIEW;
 
     const onMapLoad = useCallback(() => {
-        const map = mapRef.current.getMap();
-        const deck = deckRef.current.deck;
+        const map = mapRef.current?.getMap();
+        const deck = deckRef.current?.deck;
         // prevent flashing
         map.addLayer(new MapboxLayer({ id: 'empty-layer', deck }));
         mapInstanceRef.current.map = map;
