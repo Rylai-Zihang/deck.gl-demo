@@ -7,7 +7,7 @@ module.exports = {
     // use spaces instead of indentations
     useTabs: false,
     // no semicolon at the end of the line
-    semi: false,
+    semi: true,
     // use single quotes
     singleQuote: true,
     // object's key is quoted only when necessary
@@ -39,4 +39,4 @@ module.exports = {
     endOfLine: 'lf',
     // formats quoted code embedded
     embeddedLanguageFormatting: 'auto'
-}
+};
