@@ -39,10 +39,23 @@ export default function Map() {
             type: 'geojson',
             data: fileContent
         });
-        const pointLayerOptions = getLayerOptions(`${layerName}-point`,'circle',layerName, {paint: { 'circle-color': POINT_COLORS[newIndex]}})
-        const symbolLayerOptions = getLayerOptions(`${layerName}-label`,'symbol',layerName)
-        map.addLayer(pointLayerOptions)
-        map.addLayer(symbolLayerOptions)
+        map.addLayer(
+            getLayerOptions({
+                id: `${layerName}-point`,
+                type: 'circle',
+                source: layerName,
+                paint: {
+                    'circle-color': POINT_COLORS[newIndex]
+                }
+            })
+        );
+        map.addLayer(
+            getLayerOptions({
+                id: `${layerName}-label`,
+                type: 'symbol',
+                source: layerName
+            })
+        );
     }, [fileContent]);
 
     useEffect(() => {

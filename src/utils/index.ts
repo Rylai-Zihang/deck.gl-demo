@@ -7,10 +7,9 @@ export const getInitialView = (data: GeoData): InitialView => {
     return { ...DEFAULT_INITIAL_VIEW, longitude, latitude };
 };
 
-export const getLayerOptions = (id: string, type: LayerType, source: string, options?: LayerOptions): LayerOptions => {
-    const basicOptions = { id, type, source };
-    const typeLayerOptions: LayerOptions = DEFAULT_LAYER_OPTIONS[type];
-    const basicCircleOptions = { ...basicOptions, ...typeLayerOptions };
-    const finalOptions = _.merge(basicCircleOptions, options);
+export function getLayerOptions(options: LayerOptions): LayerOptions {
+    const { type } = options;
+    const typeLayerOptions = DEFAULT_LAYER_OPTIONS[type];
+    const finalOptions = _.merge(typeLayerOptions, options);
     return finalOptions;
-};
+}
