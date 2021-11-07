@@ -30,7 +30,8 @@ export interface Store {
     clickedLayer: GeoLayer | null;
 }
 
-export interface Action {
-    type: string;
-    [key: string]: any;
-}
+export type Action =
+    | { type: 'setFileContent'; fileContent: GeoData | null }
+    | { type: 'setLayerArray'; layerArray: string[] }
+    | { type: 'setVisibilityArray'; visibilityArray: boolean[] }
+    | { type: 'setClickedLayer'; clickedLayer: GeoLayer | null };
