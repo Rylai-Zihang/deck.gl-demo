@@ -4,7 +4,7 @@ import { MapRef, StaticMap } from 'react-map-gl';
 import { MapboxLayer } from '@deck.gl/mapbox';
 
 import store from '../../store';
-import { getInitialView } from '../../utils';
+import { getInitialView, getLayerOptions } from '../../utils';
 import { InitialView } from '../../types';
 import { MAPBOX_TOKEN, POINT_COLORS, DEFAULT_INITIAL_VIEW } from '../../utils/constants';
 
@@ -39,28 +39,10 @@ export default function Map() {
             type: 'geojson',
             data: fileContent
         });
-        map.addLayer({
-            id: `${layerName}-point`,
-            type: 'circle',
-            source: layerName,
-            paint: {
-                'circle-radius': 3,
-                'circle-color': POINT_COLORS[newIndex]
-            },
-            filter: ['==', '$type', 'Point']
-        });
-        map.addLayer({
-            id: `${layerName}-label`,
-            type: 'symbol',
-            source: layerName,
-            layout: {
-                'text-field': ['get', 'name'],
-                'text-size': 12,
-                'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-                'text-radial-offset': 0.5,
-                'text-justify': 'auto'
-            }
-        });
+        const pointLayerOptions = getLayerOptions(`${layerName}-point`,'circle',layerName, {paint: { 'circle-color': POINT_COLORS[newIndex]}})
+        const symbolLayerOptions = getLayerOptions(`${layerName}-label`,'symbol',layerName)
+        map.addLayer(pointLayerOptions)
+        map.addLayer(symbolLayerOptions)
     }, [fileContent]);
 
     useEffect(() => {

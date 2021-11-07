@@ -1925,6 +1925,10 @@
   version "7.0.9"
   resolved "https://registry.nlark.com/@types/json-schema/download/@types/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
 
+"@types/lodash@^4.14.176":
+  version "4.14.176"
+  resolved "https://registry.npmmirror.com/@types/lodash/download/@types/lodash-4.14.176.tgz?cache=0&sync_timestamp=1634769339682&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40types%2Flodash%2Fdownload%2F%40types%2Flodash-4.14.176.tgz#641150fc1cda36fbfa329de603bbb175d7ee20c0"
+
 "@types/mapbox-gl@^2.0.3":
   version "2.4.2"
   resolved "https://registry.nlark.com/@types/mapbox-gl/download/@types/mapbox-gl-2.4.2.tgz?cache=0&sync_timestamp=1631946739847&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fmapbox-gl%2Fdownload%2F%40types%2Fmapbox-gl-2.4.2.tgz#b2d5d6572a49561eef0eb361afd92365027efc50"
@@ -4308,7 +4312,7 @@ lodash.uniq@^4.5.0:
 
 lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.21:
   version "4.17.21"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
+  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.21.tgz?cache=0&sync_timestamp=1615982514995&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
 
 log-symbols@^4.1.0:
   version "4.1.0"

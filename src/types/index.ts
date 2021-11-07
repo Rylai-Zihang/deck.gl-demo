@@ -35,3 +35,11 @@ export type Action =
     | { type: 'setLayerArray'; layerArray: string[] }
     | { type: 'setVisibilityArray'; visibilityArray: boolean[] }
     | { type: 'setClickedLayer'; clickedLayer: GeoLayer | null };
+
+export interface LayerOptions {
+    paint?: { [prop: string]: number | string };
+    layout?: { [prop: string]: number | string | string[] };
+    filter?: string[];
+}
+
+export type LayerType = 'circle' | 'symbol';
