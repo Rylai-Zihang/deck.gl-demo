@@ -64,7 +64,7 @@ export default function Map() {
     }, [fileContent]);
 
     useEffect(() => {
-        if(!clickedLayer) return
+        if (!clickedLayer) return;
         const { map } = mapInstanceRef.current;
         const { checked } = layerStatus[clickedLayer];
         const visibilityState = checked ? 'visible' : 'none';
