@@ -6,13 +6,15 @@ import store from '../../store';
 
 export default function Uploader() {
     const { state, dispatch } = useContext(store.Context);
-    const { visibilityArray, layerArray } = state;
+    const { layerStatus } = state;
+    const layerArray = Object.keys(layerStatus);
     const options: UploadProps = {
         name: 'file',
         accept: '.geojson',
         showUploadList: false,
         beforeUpload(file) {
-            if (layerArray.indexOf(file.name) > -1) {
+            const fileName = file.name;
+            if (layerArray.indexOf(fileName) > -1) {
                 message.warning('该图层已存在哦');
                 return;
             }
@@ -24,8 +26,16 @@ export default function Uploader() {
                     dispatch({ type: 'setFileContent', fileContent });
                 };
                 reader.readAsText(file);
-                dispatch({ type: 'setLayerArray', layerArray: [...layerArray, file.name] });
-                dispatch({ type: 'setVisibilityArray', visibilityArray: [...visibilityArray, true] });
+                dispatch({
+                    type: 'setLayerStatus',
+                    layerStatus: {
+                        ...layerStatus,
+                        [fileName]: {
+                            checked: true,
+                            index: layerArray.length
+                        }
+                    }
+                });
                 // Prevent upload
                 return false;
             });
