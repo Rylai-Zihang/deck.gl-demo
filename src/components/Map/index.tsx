@@ -9,8 +9,8 @@ import { InitialView } from '../../types';
 import { MAPBOX_TOKEN, POINT_COLORS, DEFAULT_INITIAL_VIEW } from '../../utils/constants';
 
 export default function Map() {
-    const { state, dispatch } = useContext(store.Context);
-    const { fileContent, layerArray, clickedLayer, visibilityArray } = state;
+    const { state } = useContext(store.Context);
+    const { fileContent, clickedLayer, layerStatus } = state;
     const [glContext, setGLContext] = useState<WebGLRenderingContext>();
 
     const deckRef = useRef<DeckGL>(null);
@@ -24,15 +24,20 @@ export default function Map() {
     const onMapLoad = useCallback(() => {
         const map = mapRef.current?.getMap();
         const deck = deckRef.current?.deck;
-        // prevent flashing
+        // Initialize an empty deck.gl layer to prevent flashing
         map.addLayer(new MapboxLayer({ id: 'empty-layer', deck }));
         mapInstanceRef.current.map = map;
     }, []);
 
+    // Sort the layer array according to the index property
+    const layerArray = Object.keys(layerStatus).sort((a, b) => {
+        return layerStatus[a].index - layerStatus[b].index;
+    });
+
     useEffect(() => {
         if (!fileContent) return;
         const { map } = mapInstanceRef.current;
-        // get the newest layer
+        // Get the newest layer
         const newIndex = layerArray.length - 1;
         const layerName = layerArray[newIndex];
         map.addSource(layerName, {
@@ -59,17 +64,13 @@ export default function Map() {
     }, [fileContent]);
 
     useEffect(() => {
-        if (!clickedLayer) return;
-        const { index, checked } = clickedLayer;
+        if(!clickedLayer) return
         const { map } = mapInstanceRef.current;
+        const { checked } = layerStatus[clickedLayer];
         const visibilityState = checked ? 'visible' : 'none';
-        const layerName = layerArray[index];
-        map?.setLayoutProperty(`${layerName}-point`, 'visibility', visibilityState);
-        map?.setLayoutProperty(`${layerName}-label`, 'visibility', visibilityState);
-        const newArray = [...visibilityArray];
-        newArray.splice(index, 1, checked);
-        dispatch({ type: 'setVisibilityArray', visibilityArray: newArray });
-    }, [clickedLayer]);
+        map?.setLayoutProperty(`${clickedLayer}-point`, 'visibility', visibilityState);
+        map?.setLayoutProperty(`${clickedLayer}-label`, 'visibility', visibilityState);
+    }, [clickedLayer, layerStatus]);
 
     return (
         <DeckGL
@@ -82,7 +83,7 @@ export default function Map() {
             }}
         >
             {glContext && (
-                /* Mapbox must be instantiated after the WebGLContext is available */
+                // Mapbox must be instantiated after the WebGLContext is available
                 <StaticMap
                     ref={mapRef}
                     gl={glContext}

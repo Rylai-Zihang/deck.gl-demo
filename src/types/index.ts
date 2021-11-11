@@ -18,23 +18,20 @@ export interface InitialView {
     bearing: number;
 }
 
-interface GeoLayer {
-    index: number;
-    checked: boolean;
+interface LayerStatus {
+    [layerName: string]: { checked: boolean; index: number };
 }
 
 export interface Store {
     fileContent: GeoData | null;
-    layerArray: string[];
-    visibilityArray: boolean[];
-    clickedLayer: GeoLayer | null;
+    clickedLayer: string;
+    layerStatus: LayerStatus;
 }
 
 export type Action =
     | { type: 'setFileContent'; fileContent: GeoData | null }
-    | { type: 'setLayerArray'; layerArray: string[] }
-    | { type: 'setVisibilityArray'; visibilityArray: boolean[] }
-    | { type: 'setClickedLayer'; clickedLayer: GeoLayer | null };
+    | { type: 'setClickedLayer'; clickedLayer: string }
+    | { type: 'setLayerStatus'; layerStatus: LayerStatus };
 
 export interface LayerOptions {
     id: string;

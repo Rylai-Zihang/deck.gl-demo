@@ -6,9 +6,15 @@ import { POINT_COLORS } from '../../utils/constants';
 
 const ControlPanel = () => {
     const { state, dispatch } = useContext(store.Context);
-    const { layerArray, visibilityArray } = state;
+    const { layerStatus } = state;
+    // Sort the layer array according to the index property
+    const layerArray = Object.keys(layerStatus).sort((a, b) => {
+        return layerStatus[a].index - layerStatus[b].index;
+    });
     const onChange = (checked: boolean, index: number) => {
-        dispatch({ type: 'setClickedLayer', clickedLayer: { index, checked } });
+        const layerName = layerArray[index];
+        dispatch({ type: 'setClickedLayer', clickedLayer: layerName });
+        dispatch({ type: 'setLayerStatus', layerStatus: { ...layerStatus, [layerName]: { index, checked } } });
     };
     return (
         <div className="layer-control-panel">
@@ -20,7 +26,10 @@ const ControlPanel = () => {
                             <span style={{ color: `${POINT_COLORS[index]}` }}>
                                 图层{index + 1}: {layer}
                             </span>
-                            <Switch checked={visibilityArray[index]} onChange={(checked) => onChange(checked, index)} />
+                            <Switch
+                                checked={layerStatus[layer]['checked']}
+                                onChange={(checked) => onChange(checked, index)}
+                            />
                         </div>
                     );
                 })
